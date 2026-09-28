@@ -1,734 +1,197 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CodeFlow | Visual Development Platform</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <title>Harmony • 与自然共生</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&amp;family=Playfair+Display:wght@700&amp;display=swap');
+        
+        :root {
+            --primary: 34 197 94;
         }
         
-        body {
-            font-family: 'Roboto', sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background-color: #f9fbfd;
+        .tail-container {
+            font-family: 'Noto Sans SC', system-ui, sans-serif;
         }
         
-        h1, h2, h3, h4 {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            line-height: 1.3;
+        .hero-bg {
+            background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url('https://picsum.photos/id/1015/2000/1200') center/cover no-repeat;
         }
         
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
-        /* Header & Navigation */
-        header {
-            background-color: #fff;
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
-            position: fixed;
-            width: 100%;
-            z-index: 1000;
+        .card-hover:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 25px 50px -12px rgb(16 185 129);
         }
         
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
+        .wave {
+            animation: wave 8s linear infinite;
         }
         
-        .logo {
-            display: flex;
-            align-items: center;
+        @keyframes wave {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(-25%); }
         }
         
-        .logo-icon {
-            color: #4361ee;
-            font-size: 28px;
-            margin-right: 10px;
-        }
-        
-        .logo-text {
-            font-family: 'Poppins', sans-serif;
-            font-size: 24px;
-            font-weight: 700;
-            color: #333;
-        }
-        
-        .logo-text span {
-            color: #4361ee;
-        }
-        
-        .nav-links {
-            display: flex;
-            list-style: none;
-        }
-        
-        .nav-links li {
-            margin-left: 30px;
-        }
-        
-        .nav-links a {
-            text-decoration: none;
-            color: #555;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-        
-        .nav-links a:hover {
-            color: #4361ee;
-        }
-        
-        .cta-button {
-            background-color: #4361ee;
-            color: white;
-            border: none;
-            padding: 12px 28px;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
-        }
-        
-        .cta-button:hover {
-            background-color: #3a56d4;
-            transform: translateY(-2px);
-        }
-        
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 24px;
-            color: #333;
-            cursor: pointer;
-        }
-        
-        /* Hero Section */
-        .hero {
-            padding: 150px 0 100px;
-            background: linear-gradient(135deg, #f0f4ff 0%, #f9fbfd 100%);
-        }
-        
-        .hero-content {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        .hero-text {
-            flex: 1;
-            padding-right: 40px;
-        }
-        
-        .hero-text h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
-            color: #222;
-        }
-        
-        .hero-text h1 span {
-            color: #4361ee;
-        }
-        
-        .hero-text p {
-            font-size: 18px;
-            color: #666;
-            margin-bottom: 30px;
-            max-width: 600px;
-        }
-        
-        .hero-buttons {
-            display: flex;
-            gap: 15px;
-        }
-        
-        .secondary-button {
-            background-color: white;
-            color: #4361ee;
-            border: 2px solid #4361ee;
-            padding: 12px 28px;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .secondary-button:hover {
-            background-color: #f0f4ff;
-        }
-        
-        .hero-image {
-            flex: 1;
-            text-align: center;
-        }
-        
-        .hero-image img {
-            max-width: 100%;
-            border-radius: 10px;
-            box-shadow: 0 20px 40px rgba(67, 97, 238, 0.15);
-        }
-        
-        /* Features Section */
-        .section-title {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-        
-        .section-title h2 {
-            font-size: 36px;
-            color: #222;
-            margin-bottom: 15px;
-        }
-        
-        .section-title p {
-            color: #666;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-        
-        .features {
-            padding: 100px 0;
-            background-color: white;
-        }
-        
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-        }
-        
-        .feature-card {
-            background: #fff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-        }
-        
-        .feature-icon {
-            background-color: #eef2ff;
-            color: #4361ee;
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
-            font-size: 28px;
-        }
-        
-        .feature-card h3 {
-            font-size: 22px;
-            margin-bottom: 15px;
-        }
-        
-        .feature-card p {
-            color: #666;
-        }
-        
-        /* Benefits Section */
-        .benefits {
-            padding: 100px 0;
-            background-color: #f0f4ff;
-        }
-        
-        .benefits-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-        }
-        
-        .benefit-item {
-            text-align: center;
-            padding: 30px 20px;
-        }
-        
-        .benefit-icon {
-            color: #4361ee;
-            font-size: 40px;
-            margin-bottom: 20px;
-        }
-        
-        .benefit-item h3 {
-            font-size: 22px;
-            margin-bottom: 15px;
-        }
-        
-        .benefit-item p {
-            color: #666;
-        }
-        
-        /* Testimonials */
-        .testimonials {
-            padding: 100px 0;
-            background-color: white;
-        }
-        
-        .testimonial-slider {
-            max-width: 800px;
-            margin: 0 auto;
+        .nav-link {
             position: relative;
         }
         
-        .testimonial {
-            background: #f9fbfd;
-            padding: 40px;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        }
-        
-        .testimonial-text {
-            font-size: 18px;
-            font-style: italic;
-            margin-bottom: 30px;
-            color: #555;
-        }
-        
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .author-avatar {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background-color: #ddd;
-            margin-right: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            color: #4361ee;
-            font-size: 24px;
-        }
-        
-        .author-info h4 {
-            font-size: 18px;
-            margin-bottom: 5px;
-        }
-        
-        .author-info p {
-            color: #777;
-            font-size: 14px;
-        }
-        
-        /* Pricing Section */
-        .pricing {
-            padding: 100px 0;
-            background-color: #f9fbfd;
-        }
-        
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-        }
-        
-        .pricing-card {
-            background: white;
-            border-radius: 10px;
-            padding: 40px 30px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-            text-align: center;
-            transition: transform 0.3s;
-        }
-        
-        .pricing-card.featured {
-            border-top: 5px solid #4361ee;
-            transform: scale(1.05);
-            position: relative;
-        }
-        
-        .featured-badge {
+        .nav-link:after {
+            content: '';
             position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #4361ee;
-            color: white;
-            padding: 5px 20px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 600;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: rgb(16 185 129);
+            transition: width 0.3s ease;
         }
         
-        .pricing-card:hover {
-            transform: translateY(-10px);
-        }
-        
-        .pricing-card.featured:hover {
-            transform: scale(1.05) translateY(-10px);
-        }
-        
-        .plan-name {
-            font-size: 24px;
-            margin-bottom: 15px;
-            color: #333;
-        }
-        
-        .plan-price {
-            font-size: 48px;
-            font-weight: 700;
-            color: #4361ee;
-            margin-bottom: 20px;
-        }
-        
-        .plan-price span {
-            font-size: 16px;
-            color: #777;
-        }
-        
-        .plan-features {
-            list-style: none;
-            margin-bottom: 30px;
-        }
-        
-        .plan-features li {
-            padding: 10px 0;
-            border-bottom: 1px solid #eee;
-            color: #555;
-        }
-        
-        .plan-features li:last-child {
-            border-bottom: none;
-        }
-        
-        /* CTA Section */
-        .cta-section {
-            padding: 100px 0;
-            background: linear-gradient(135deg, #4361ee 0%, #3a56d4 100%);
-            text-align: center;
-            color: white;
-        }
-        
-        .cta-section h2 {
-            font-size: 36px;
-            margin-bottom: 20px;
-        }
-        
-        .cta-section p {
-            font-size: 18px;
-            max-width: 700px;
-            margin: 0 auto 30px;
-            opacity: 0.9;
-        }
-        
-        .cta-section .cta-button {
-            background-color: white;
-            color: #4361ee;
-            font-size: 16px;
-            padding: 15px 40px;
-        }
-        
-        .cta-section .cta-button:hover {
-            background-color: #f0f4ff;
-        }
-        
-        /* Footer */
-        footer {
-            background-color: #222;
-            color: #ccc;
-            padding: 70px 0 20px;
-        }
-        
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 40px;
-            margin-bottom: 50px;
-        }
-        
-        .footer-column h3 {
-            font-size: 20px;
-            color: white;
-            margin-bottom: 25px;
-        }
-        
-        .footer-links {
-            list-style: none;
-        }
-        
-        .footer-links li {
-            margin-bottom: 12px;
-        }
-        
-        .footer-links a {
-            color: #aaa;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        
-        .footer-links a:hover {
-            color: #4361ee;
-        }
-        
-        .copyright {
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid #444;
-            font-size: 14px;
-            color: #888;
-        }
-        
-        /* Responsive Design */
-        @media (max-width: 992px) {
-            .hero-content {
-                flex-direction: column;
-            }
-            
-            .hero-text {
-                padding-right: 0;
-                margin-bottom: 50px;
-                text-align: center;
-            }
-            
-            .hero-text p {
-                margin: 0 auto 30px;
-            }
-            
-            .pricing-card.featured {
-                transform: none;
-            }
-            
-            .pricing-card.featured:hover {
-                transform: translateY(-10px);
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-            
-            .mobile-menu-btn {
-                display: block;
-            }
-            
-            .hero-text h1 {
-                font-size: 36px;
-            }
-            
-            .section-title h2 {
-                font-size: 30px;
-            }
-            
-            .hero-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .hero-buttons button {
-                width: 100%;
-                max-width: 300px;
-            }
-        }
-        
-        @media (max-width: 576px) {
-            .hero {
-                padding: 130px 0 80px;
-            }
-            
-            .features, .benefits, .testimonials, .pricing, .cta-section {
-                padding: 70px 0;
-            }
-            
-            .feature-card, .testimonial {
-                padding: 25px;
-            }
-            
-            .plan-price {
-                font-size: 36px;
-            }
+        .nav-link:hover:after {
+            width: 100%;
         }
     </style>
 </head>
-<body>
-    <!-- Header & Navigation -->
-    <header>
-        <div class="container">
-            <nav>
-                <div class="logo">
-                    <div class="logo-icon"><i class="fas fa-bezier-curve"></i></div>
-                    <div class="logo-text">Code<span>Flow</span></div>
+<body class="tail-container bg-emerald-950 text-white overflow-x-hidden">
+    <!-- NAVBAR -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-emerald-950/90 backdrop-blur-lg border-b border-emerald-900">
+        <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <i class="fa-solid fa-leaf text-3xl text-emerald-400"></i>
+                <span class="text-2xl font-bold tracking-tighter">Harmony</span>
+            </div>
+            
+            <div class="hidden md:flex items-center gap-8 text-sm font-medium">
+                <a href="#home" class="nav-link text-white hover:text-emerald-300 transition-colors">首页</a>
+                <a href="#about" class="nav-link text-white hover:text-emerald-300 transition-colors">关于我们</a>
+                <a href="#initiatives" class="nav-link text-white hover:text-emerald-300 transition-colors">行动计划</a>
+                <a href="#impact" class="nav-link text-white hover:text-emerald-300 transition-colors">真实影响</a>
+                <a href="#get-involved" class="nav-link text-white hover:text-emerald-300 transition-colors">加入我们</a>
+            </div>
+            
+            <a href="#get-involved" 
+               class="px-6 py-3 bg-white text-emerald-950 font-semibold rounded-2xl hover:bg-emerald-100 transition-all flex items-center gap-2 shadow-lg shadow-emerald-500/30">
+                <i class="fa-solid fa-hand-holding-heart"></i>
+                <span>立即加入</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section id="home" class="hero-bg h-screen flex items-center pt-16">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+            <div class="space-y-8">
+                <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-5 py-2 rounded-3xl text-sm">
+                    <div class="w-3 h-3 bg-emerald-400 rounded-full animate-pulse"></div>
+                    <span>2026 • 全球首个共生宣言</span>
                 </div>
                 
-                <ul class="nav-links">
-                    <li><a href="#features">Features</a></li>
-                    <li><a href="#benefits">Benefits</a></li>
-                    <li><a href="#testimonials">Testimonials</a></li>
-                    <li><a href="#pricing">Pricing</a></li>
-                    <li><a href="#">Resources</a></li>
-                </ul>
+                <h1 class="text-6xl md:text-7xl font-bold leading-none tracking-tighter">
+                    人类<br>与自然<br><span class="text-emerald-400">和谐相处</span>
+                </h1>
                 
-                <button class="cta-button">Start Free Trial</button>
-                <button class="mobile-menu-btn"><i class="fas fa-bars"></i></button>
-            </nav>
-        </div>
-    </header>
-
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h1>Build Apps Faster With <span>Visual Development</span></h1>
-                    <p>CodeFlow empowers teams to create enterprise-grade applications with minimal coding. Drag, drop, and connect components to build powerful web and mobile apps in record time.</p>
-                    <div class="hero-buttons">
-                        <button class="cta-button">Start Building Free</button>
-                        <button class="secondary-button">Watch Demo</button>
+                <p class="text-xl text-emerald-100 max-w-lg">
+                    不是征服自然，而是与它共同成长。<br>
+                    我们的行动，将重塑地球的未来。
+                </p>
+                
+                <div class="flex flex-wrap gap-4">
+                    <a href="#initiatives" 
+                       class="px-10 py-5 bg-emerald-400 hover:bg-emerald-300 text-emerald-950 font-semibold text-lg rounded-3xl flex items-center gap-3 transition-all active:scale-95">
+                        <span>立即开始行动</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                    <a href="#get-involved" 
+                       class="px-10 py-5 border-2 border-white/70 hover:border-white font-medium text-lg rounded-3xl transition-all">
+                        了解更多
+                    </a>
+                </div>
+                
+                <div class="flex items-center gap-8 pt-8">
+                    <div class="flex -space-x-4">
+                        <div class="w-9 h-9 bg-emerald-300 rounded-2xl border-2 border-emerald-950 flex items-center justify-center text-xs font-bold">🌱</div>
+                        <div class="w-9 h-9 bg-sky-300 rounded-2xl border-2 border-emerald-950 flex items-center justify-center text-xs font-bold">🐟</div>
+                        <div class="w-9 h-9 bg-amber-300 rounded-2xl border-2 border-emerald-950 flex items-center justify-center text-xs font-bold">🌿</div>
+                    </div>
+                    <div class="text-sm">
+                        <div class="font-medium">超过 <span class="text-emerald-400">2,847</span> 人已加入</div>
+                        <div class="text-emerald-300">本周已修复 14,892 亩森林</div>
                     </div>
                 </div>
-                <div class="hero-image">
-                    <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="CodeFlow Platform Interface">
+            </div>
+            
+            <div class="hidden md:flex justify-end">
+                <div class="relative">
+                    <img src="https://picsum.photos/id/1016/600/700" alt="和谐森林" 
+                         class="rounded-3xl shadow-2xl w-full max-w-md border-8 border-white/20">
+                    <div class="absolute -bottom-6 -left-6 bg-white text-emerald-950 p-6 rounded-3xl shadow-2xl">
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-heart text-3xl text-emerald-400"></i>
+                            <div>
+                                <div class="font-bold text-2xl">98%</div>
+                                <div class="text-sm opacity-70">当地野生动物重返家园</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </div>
+        
+        <!-- floating wave -->
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center text-emerald-300/60 text-xs tracking-widest">
+            <span class="wave">🌊 自然在歌唱</span>
         </div>
     </section>
 
-    <!-- Features Section -->
-    <section class="features" id="features">
-        <div class="container">
-            <div class="section-title">
-                <h2>Powerful Features for Rapid Development</h2>
-                <p>CodeFlow provides all the tools you need to build, deploy, and scale applications without writing extensive code.</p>
-            </div>
-            
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-th-large"></i>
+    <!-- ABOUT -->
+    <section id="about" class="py-24 bg-emerald-950">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-12 gap-16 items-center">
+                <div class="md:col-span-5">
+                    <div class="sticky top-28">
+                        <span class="uppercase text-emerald-400 text-sm font-medium tracking-widest">我们的故事</span>
+                        <h2 class="text-5xl font-bold leading-none mt-4">我们相信：人类与自然<br>必须相互滋养</h2>
+                        <div class="h-px w-20 bg-emerald-700 my-8"></div>
+                        <p class="text-lg text-emerald-100 leading-relaxed">
+                            Harmony 成立于2024年，最初是一群环保主义者与科学家发现：<br>
+                            当人类停止掠夺地球，我们的星球就会自发恢复生机。
+                        </p>
+                        <div class="mt-10 flex items-center gap-6 text-sm">
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-check text-emerald-400"></i>
+                                <span>已保护 1,200,000 亩土地</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-check text-emerald-400"></i>
+                                <span>25+ 国家行动</span>
+                            </div>
+                        </div>
                     </div>
-                    <h3>Visual Builder</h3>
-                    <p>Drag and drop UI components to design responsive interfaces. Connect data sources with simple point-and-click actions.</p>
                 </div>
                 
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-database"></i>
-                    </div>
-                    <h3>Database Integration</h3>
-                    <p>Connect to any data source with built-in connectors. Automatically generate CRUD operations without writing SQL.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-mobile-alt"></i>
-                    </div>
-                    <h3>Cross-Platform</h3>
-                    <p>Build once, deploy everywhere. Generate applications for web, iOS, and Android from a single visual design.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-code"></i>
-                    </div>
-                    <h3>Extensible with Code</h3>
-                    <p>Add custom functionality with JavaScript when needed. Our platform doesn't limit your creativity or complexity.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3>Enterprise Security</h3>
-                    <p>Built-in authentication, authorization, and data encryption. SOC2 compliant with enterprise-grade security features.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-rocket"></i>
-                    </div>
-                    <h3>One-Click Deployment</h3>
-                    <p>Deploy to cloud or on-premises with a single click. Automatic scaling and monitoring included.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Benefits Section -->
-    <section class="benefits" id="benefits">
-        <div class="container">
-            <div class="section-title">
-                <h2>Why Choose CodeFlow?</h2>
-                <p>Join thousands of companies accelerating their digital transformation with low-code development.</p>
-            </div>
-            
-            <div class="benefits-grid">
-                <div class="benefit-item">
-                    <div class="benefit-icon">
-                        <i class="fas fa-bolt"></i>
-                    </div>
-                    <h3>10x Faster Development</h3>
-                    <p>Build applications in days instead of months with visual development tools.</p>
-                </div>
-                
-                <div class="benefit-item">
-                    <div class="benefit-icon">
-                        <i class="fas fa-money-bill-wave"></i>
-                    </div>
-                    <h3>Reduce Costs by 70%</h3>
-                    <p>Lower development and maintenance costs with fewer resources required.</p>
-                </div>
-                
-                <div class="benefit-item">
-                    <div class="benefit-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <h3>Citizen Developers</h3>
-                    <p>Enable business users to build solutions with minimal IT assistance.</p>
-                </div>
-                
-                <div class="benefit-item">
-                    <div class="benefit-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <h3>Scale Effortlessly</h3>
-                    <p>From prototype to enterprise-scale applications with the same platform.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials -->
-    <section class="testimonials" id="testimonials">
-        <div class="container">
-            <div class="section-title">
-                <h2>Trusted by Industry Leaders</h2>
-                <p>See what our customers have to say about their experience with CodeFlow.</p>
-            </div>
-            
-            <div class="testimonial-slider">
-                <div class="testimonial">
-                    <div class="testimonial-text">
-                        "CodeFlow transformed how we deliver solutions to our business units. What used to take 6 months now takes 3 weeks. Our development team can focus on complex problems while business teams build their own solutions."
-                    </div>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">SC</div>
-                        <div class="author-info">
-                            <h4>Sarah Chen</h4>
-                            <p>CTO, TechGrowth Inc.</p>
+                <div class="md:col-span-7 space-y-12">
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
+                        <div class="bg-emerald-900/50 rounded-3xl p-8 card-hover">
+                            <div class="text-4xl mb-6">🌍</div>
+                            <div class="font-semibold text-xl mb-2">森林再生计划</div>
+                            <p class="text-emerald-200">植树 + 社区培训，已让 47 万亩土地回归原生植被。</p>
+                        </div>
+                        <div class="bg-emerald-900/50 rounded-3xl p-8 card-hover">
+                            <div class="text-4xl mb-6">🐢</div>
+                            <div class="font-semibold text-xl mb-2">野生动物保护</div>
+                            <p class="text-emerald-200">通过与当地部落合作，成功让红树林、鲸鱼与熊类重新定居。</p>
+                        </div>
+                        <div class="bg-emerald-900/50 rounded-3xl p-8 card-hover">
+                            <div class="text-4xl mb-6">🌱</div>
+                            <div class="font-semibold text-xl mb-2">绿色经济</div>
+                            <p class="text-emerald-200">打造“零碳村”，让社区通过生态旅游获得稳定收入。</p>
                         </div>
                     </div>
                 </div>
@@ -736,231 +199,282 @@
         </div>
     </section>
 
-    <!-- Pricing Section -->
-    <section class="pricing" id="pricing">
-        <div class="container">
-            <div class="section-title">
-                <h2>Simple, Transparent Pricing</h2>
-                <p>Choose the plan that fits your needs. All plans include core features with no hidden fees.</p>
+    <!-- INITIATIVES -->
+    <section id="initiatives" class="py-24 bg-emerald-900">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex justify-between items-end mb-12">
+                <div>
+                    <span class="text-emerald-400 text-sm font-medium">立即可执行</span>
+                    <h2 class="text-5xl font-bold">全球行动计划</h2>
+                </div>
+                <a href="#get-involved" class="flex items-center gap-2 text-emerald-400 hover:text-emerald-300 text-sm font-medium">
+                    查看全部计划 <i class="fa-solid fa-arrow-right"></i>
+                </a>
             </div>
             
-            <div class="pricing-grid">
-                <div class="pricing-card">
-                    <h3 class="plan-name">Starter</h3>
-                    <div class="plan-price">$29<span>/month</span></div>
-                    <ul class="plan-features">
-                        <li>Up to 5 users</li>
-                        <li>10 GB storage</li>
-                        <li>Basic components</li>
-                        <li>Community support</li>
-                        <li>1 production app</li>
-                    </ul>
-                    <button class="secondary-button">Get Started</button>
-                </div>
-                
-                <div class="pricing-card featured">
-                    <div class="featured-badge">Most Popular</div>
-                    <h3 class="plan-name">Professional</h3>
-                    <div class="plan-price">$89<span>/month</span></div>
-                    <ul class="plan-features">
-                        <li>Up to 25 users</li>
-                        <li>100 GB storage</li>
-                        <li>All components</li>
-                        <li>Priority support</li>
-                        <li>10 production apps</li>
-                        <li>Custom branding</li>
-                    </ul>
-                    <button class="cta-button">Try Free for 14 Days</button>
-                </div>
-                
-                <div class="pricing-card">
-                    <h3 class="plan-name">Enterprise</h3>
-                    <div class="plan-price">Custom</div>
-                    <ul class="plan-features">
-                        <li>Unlimited users</li>
-                        <li>Unlimited storage</li>
-                        <li>All features included</li>
-                        <li>24/7 dedicated support</li>
-                        <li>Unlimited apps</li>
-                        <li>On-premises option</li>
-                    </ul>
-                    <button class="secondary-button">Contact Sales</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <div class="container">
-            <h2>Start Building Today</h2>
-            <p>Join over 10,000 companies that use CodeFlow to accelerate their application development. No credit card required for the free trial.</p>
-            <button class="cta-button">Get Started for Free</button>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <div class="logo">
-                        <div class="logo-icon"><i class="fas fa-bezier-curve"></i></div>
-                        <div class="logo-text">Code<span>Flow</span></div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Initiative 1 -->
+                <div class="bg-emerald-950 border border-emerald-800 rounded-3xl overflow-hidden card-hover group">
+                    <div class="h-2 bg-gradient-to-r from-emerald-400 to-teal-400"></div>
+                    <div class="p-8">
+                        <div class="flex justify-between">
+                            <div class="text-5xl font-bold text-emerald-400">01</div>
+                            <i class="fa-solid fa-tree text-4xl text-emerald-500"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold mt-6">全球植树日</h3>
+                        <p class="text-emerald-200 mt-4">2026年9月27日 • 全球同步</p>
+                        <ul class="mt-8 space-y-4 text-sm">
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-check text-emerald-400 mt-1"></i>
+                                <span>在哥斯达黎加热带雨林种下 10 万棵树</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-check text-emerald-400 mt-1"></i>
+                                <span>与印尼社区共同种树 50 万棵</span>
+                            </li>
+                        </ul>
+                        <div class="mt-10 pt-6 border-t border-emerald-900 text-xs uppercase tracking-widest flex items-center gap-2">
+                            <div class="flex-1 h-px bg-emerald-900"></div>
+                            <span class="text-emerald-400">进度：78%</span>
+                            <div class="flex-1 h-px bg-emerald-900"></div>
+                        </div>
                     </div>
-                    <p style="margin-top: 20px; color: #aaa;">The leading visual development platform for building enterprise applications with minimal coding.</p>
                 </div>
                 
-                <div class="footer-column">
-                    <h3>Product</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Features</a></li>
-                        <li><a href="#">Pricing</a></li>
-                        <li><a href="#">Use Cases</a></li>
-                        <li><a href="#">Integrations</a></li>
-                        <li><a href="#">Roadmap</a></li>
-                    </ul>
+                <!-- Initiative 2 -->
+                <div class="bg-emerald-950 border border-emerald-800 rounded-3xl overflow-hidden card-hover group">
+                    <div class="h-2 bg-gradient-to-r from-sky-400 to-emerald-400"></div>
+                    <div class="p-8">
+                        <div class="flex justify-between">
+                            <div class="text-5xl font-bold text-emerald-400">02</div>
+                            <i class="fa-solid fa-water text-4xl text-sky-500"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold mt-6">河流与海洋保护</h3>
+                        <p class="text-emerald-200 mt-4">每月一次“无塑料月”</p>
+                        <div class="mt-8 flex gap-8 text-xs">
+                            <div>
+                                <div class="font-mono text-3xl font-bold text-sky-400">12,400</div>
+                                <div class="text-emerald-300">kg 塑料被回收</div>
+                            </div>
+                            <div>
+                                <div class="font-mono text-3xl font-bold text-emerald-400">2.8</div>
+                                <div class="text-emerald-300">万只鱼类被救回</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 
-                <div class="footer-column">
-                    <h3>Resources</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Documentation</a></li>
-                        <li><a href="#">Tutorials</a></li>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Community</a></li>
-                        <li><a href="#">Support</a></li>
-                    </ul>
+                <!-- Initiative 3 -->
+                <div class="bg-emerald-950 border border-emerald-800 rounded-3xl overflow-hidden card-hover group relative">
+                    <div class="absolute top-6 right-6 bg-emerald-500 text-xs font-bold px-4 py-1 rounded-2xl">NEW</div>
+                    <div class="h-2 bg-gradient-to-r from-amber-400 to-emerald-400"></div>
+                    <div class="p-8">
+                        <div class="flex justify-between">
+                            <div class="text-5xl font-bold text-emerald-400">03</div>
+                            <i class="fa-solid fa-users text-4xl text-amber-500"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold mt-6">社区能源转型</h3>
+                        <p class="text-emerald-200 mt-4">太阳能 + 风能 + 森林保护</p>
+                        <div class="mt-12">
+                            <div class="text-xs text-emerald-300 mb-2">已帮助 1,200 户家庭</div>
+                            <div class="h-2.5 bg-emerald-900 rounded-full overflow-hidden">
+                                <div class="h-full w-[92%] bg-gradient-to-r from-amber-400 to-emerald-400 rounded-full"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                
-                <div class="footer-column">
-                    <h3>Company</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Careers</a></li>
-                        <li><a href="#">Contact</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Terms of Service</a></li>
-                    </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- IMPACT -->
+    <section id="impact" class="py-24 bg-emerald-950">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="px-6 py-2 bg-emerald-900/70 text-emerald-400 text-sm rounded-3xl">真实数据</span>
+                <h2 class="text-5xl font-bold mt-4">我们已经改变了多少？</h2>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div class="text-center group">
+                    <div class="text-7xl font-bold text-emerald-400 group-hover:scale-110 transition-transform">1.2</div>
+                    <div class="text-2xl mt-2 font-medium">百万亩</div>
+                    <div class="text-emerald-300 text-sm mt-1">土地被保护</div>
+                </div>
+                <div class="text-center group">
+                    <div class="text-7xl font-bold text-emerald-400 group-hover:scale-110 transition-transform">2847</div>
+                    <div class="text-2xl mt-2 font-medium">成员</div>
+                    <div class="text-emerald-300 text-sm mt-1">活跃志愿者</div>
+                </div>
+                <div class="text-center group">
+                    <div class="text-7xl font-bold text-emerald-400 group-hover:scale-110 transition-transform">98</div>
+                    <div class="text-2xl mt-2 font-medium">%</div>
+                    <div class="text-emerald-300 text-sm mt-1">本地物种恢复率</div>
+                </div>
+                <div class="text-center group">
+                    <div class="text-7xl font-bold text-emerald-400 group-hover:scale-110 transition-transform">47</div>
+                    <div class="text-2xl mt-2 font-medium">吨</div>
+                    <div class="text-emerald-300 text-sm mt-1">CO₂ 每年被吸收</div>
                 </div>
             </div>
             
-            <div class="copyright">
-                <p>&copy; 2023 CodeFlow. All rights reserved.</p>
+            <div class="mt-16 bg-emerald-900/40 rounded-3xl p-10 flex flex-col md:flex-row gap-10 items-center">
+                <div class="flex-1">
+                    <div class="text-emerald-400 text-sm font-medium mb-3">最新新闻</div>
+                    <div class="text-3xl leading-tight">2026年9月，哥斯达黎加首批红树林恢复项目成功开放</div>
+                    <a href="#" class="mt-8 inline-flex items-center gap-3 text-emerald-400 hover:gap-6 transition-all">
+                        阅读全文 <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+                <img src="https://picsum.photos/id/201/600/400" alt="恢复中的红树林" 
+                     class="rounded-3xl shadow-2xl w-full md:w-80">
+            </div>
+        </div>
+    </section>
+
+    <!-- GET INVOLVED -->
+    <section id="get-involved" class="py-24 bg-emerald-900">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="max-w-2xl mx-auto text-center">
+                <h2 class="text-5xl font-bold">加入我们，改变地球</h2>
+                <p class="mt-6 text-xl text-emerald-100">你的每一笔捐款、每一次植树、每一个分享，都是对自然最温柔的回应。</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8 mt-16">
+                <a href="#" 
+                   class="bg-emerald-950 border border-emerald-800 rounded-3xl p-10 text-center card-hover group">
+                    <div class="w-20 h-20 mx-auto bg-emerald-800/50 rounded-2xl flex items-center justify-center text-4xl mb-8 group-hover:rotate-12 transition-transform">
+                        💰
+                    </div>
+                    <div class="text-2xl font-semibold mb-3">捐款支持</div>
+                    <p class="text-emerald-200">每月捐款即可参与保护计划，获得证书与更新。</p>
+                    <div class="mt-8 text-emerald-400 font-medium flex items-center justify-center gap-2 group-hover:gap-4">
+                        立即捐献 <i class="fa-solid fa-arrow-right"></i>
+                    </div>
+                </a>
+                
+                <a href="#" 
+                   class="bg-emerald-950 border border-emerald-800 rounded-3xl p-10 text-center card-hover group">
+                    <div class="w-20 h-20 mx-auto bg-emerald-800/50 rounded-2xl flex items-center justify-center text-4xl mb-8 group-hover:rotate-12 transition-transform">
+                        🌿
+                    </div>
+                    <div class="text-2xl font-semibold mb-3">志愿植树</div>
+                    <p class="text-emerald-200">在本地参与我们每月一次的植树活动。</p>
+                    <div class="mt-8 text-emerald-400 font-medium flex items-center justify-center gap-2 group-hover:gap-4">
+                        报名志愿 <i class="fa-solid fa-arrow-right"></i>
+                    </div>
+                </a>
+                
+                <a href="#" 
+                   class="bg-emerald-950 border border-emerald-800 rounded-3xl p-10 text-center card-hover group">
+                    <div class="w-20 h-20 mx-auto bg-emerald-800/50 rounded-2xl flex items-center justify-center text-4xl mb-8 group-hover:rotate-12 transition-transform">
+                        📣
+                    </div>
+                    <div class="text-2xl font-semibold mb-3">传播影响力</div>
+                    <p class="text-emerald-200">分享我们的故事，让更多人知道并加入。</p>
+                    <div class="mt-8 text-emerald-400 font-medium flex items-center justify-center gap-2 group-hover:gap-4">
+                        分享行动 <i class="fa-solid fa-arrow-right"></i>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-black py-20 border-t border-emerald-900">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-12 gap-y-12">
+            <div class="md:col-span-5">
+                <div class="flex items-center gap-3 mb-8">
+                    <i class="fa-solid fa-leaf text-4xl text-emerald-400"></i>
+                    <span class="text-3xl font-bold tracking-tighter">Harmony</span>
+                </div>
+                <p class="max-w-xs text-emerald-300">
+                    2026 • 与自然共同成长的全球运动
+                </p>
+                <div class="mt-10 flex gap-6 text-2xl">
+                    <a href="#" class="hover:text-emerald-400 transition-colors"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="#" class="hover:text-emerald-400 transition-colors"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="hover:text-emerald-400 transition-colors"><i class="fa-brands fa-facebook"></i></a>
+                </div>
+            </div>
+            
+            <div class="md:col-span-2">
+                <div class="font-medium mb-6">快速链接</div>
+                <div class="space-y-4 text-sm">
+                    <a href="#initiatives" class="block hover:text-emerald-300">行动计划</a>
+                    <a href="#impact" class="block hover:text-emerald-300">真实影响</a>
+                    <a href="#about" class="block hover:text-emerald-300">关于我们</a>
+                </div>
+            </div>
+            
+            <div class="md:col-span-5 text-right md:text-left">
+                <div class="text-xs uppercase tracking-widest opacity-60">© 2026 Harmony Foundation</div>
+                <div class="text-xs mt-3 opacity-40">本网站使用 Tailwind CSS 构建 • 纯静态 HTML</div>
+                <div class="mt-12 text-[10px] text-emerald-700">Made with 🌱 for a better tomorrow</div>
             </div>
         </div>
     </footer>
 
     <script>
-        // Mobile menu toggle
-        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
-            const navLinks = document.querySelector('.nav-links');
-            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
-            
-            // Adjust for mobile
-            if (window.innerWidth <= 768) {
-                if (navLinks.style.display === 'flex') {
-                    navLinks.style.flexDirection = 'column';
-                    navLinks.style.position = 'absolute';
-                    navLinks.style.top = '80px';
-                    navLinks.style.left = '0';
-                    navLinks.style.width = '100%';
-                    navLinks.style.backgroundColor = 'white';
-                    navLinks.style.padding = '20px';
-                    navLinks.style.boxShadow = '0 10px 20px rgba(0,0,0,0.1)';
-                    
-                    const navItems = document.querySelectorAll('.nav-links li');
-                    navItems.forEach(item => {
-                        item.style.margin = '10px 0';
-                    });
-                }
-            }
-        });
+        // Tailwind script already loaded via CDN
+        function initializeTailwind() {
+            // No extra config needed
+        }
         
-        // Smooth scrolling for anchor links
+        // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if(targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if(targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                    
-                    // Close mobile menu if open
-                    if(window.innerWidth <= 768) {
-                        document.querySelector('.nav-links').style.display = 'none';
+                if (this.getAttribute('href') !== '#') {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
                     }
                 }
             });
         });
         
-        // Simple testimonial slider
-        const testimonials = [
-            {
-                text: "CodeFlow transformed how we deliver solutions to our business units. What used to take 6 months now takes 3 weeks. Our development team can focus on complex problems while business teams build their own solutions.",
-                name: "Sarah Chen",
-                position: "CTO, TechGrowth Inc.",
-                initials: "SC"
-            },
-            {
-                text: "We reduced our app development time by 80% using CodeFlow. The visual interface made it easy for our analysts to build data dashboards without waiting for IT resources.",
-                name: "Marcus Johnson",
-                position: "Director of Operations, DataCorp",
-                initials: "MJ"
-            },
-            {
-                text: "As a non-technical founder, CodeFlow allowed me to build our MVP in just 2 months. I could test ideas quickly and iterate based on user feedback without deep coding knowledge.",
-                name: "Lisa Wang",
-                position: "Founder, StartupLabs",
-                initials: "LW"
+        // Keyboard accessibility
+        document.addEventListener('keydown', function(e) {
+            if (e.metaKey && e.key === 'k') {
+                e.preventDefault();
+                console.log('%cHarmony 快捷键已就绪！', 'color:#10b981; font-weight:600');
             }
+        });
+        
+        // Random quote animation
+        const quotes = [
+            "地球只有一个，也只需要一个地球。",
+            "我们是自然的一部分，不是它的主人。",
+            "每一次行动，都是对未来的投资。"
         ];
         
-        let currentTestimonial = 0;
-        const testimonialElement = document.querySelector('.testimonial');
+        let quoteEl = document.createElement('div');
+        quoteEl.className = "fixed bottom-8 right-8 bg-black/80 text-emerald-400 text-xs px-6 py-3 rounded-3xl border border-emerald-900 max-w-[280px] opacity-0 pointer-events-none";
+        document.body.appendChild(quoteEl);
         
-        function rotateTestimonial() {
-            currentTestimonial = (currentTestimonial + 1) % testimonials.length;
-            updateTestimonial();
+        function showQuote() {
+            quoteEl.style.transition = 'none';
+            quoteEl.style.opacity = 0;
+            quoteEl.textContent = quotes[Math.floor(Math.random() * quotes.length)];
+            setTimeout(() => {
+                quoteEl.style.transition = 'opacity 0.4s';
+                quoteEl.style.opacity = 1;
+                setTimeout(() => {
+                    quoteEl.style.opacity = 0;
+                }, 3800);
+            }, 10);
         }
         
-        function updateTestimonial() {
-            const testimonial = testimonials[currentTestimonial];
-            testimonialElement.innerHTML = `
-                <div class="testimonial-text">"${testimonial.text}"</div>
-                <div class="testimonial-author">
-                    <div class="author-avatar">${testimonial.initials}</div>
-                    <div class="author-info">
-                        <h4>${testimonial.name}</h4>
-                        <p>${testimonial.position}</p>
-                    </div>
-                </div>
-            `;
-        }
+        setInterval(() => {
+            showQuote();
+        }, 11000);
         
-        // Auto-rotate testimonials every 5 seconds
-        setInterval(rotateTestimonial, 5000);
-        
-        // CTA button interactions
-        document.querySelectorAll('.cta-button').forEach(button => {
-            button.addEventListener('click', function() {
-                alert('Thank you for your interest in CodeFlow! You would be redirected to the signup page in a real implementation.');
-            });
-        });
-        
-        // Pricing card interactions
-        document.querySelectorAll('.pricing-card button').forEach(button => {
-            button.addEventListener('click', function() {
-                const planName = this.closest('.pricing-card').querySelector('.plan-name').textContent;
-                alert(`You selected the ${planName} plan. In a real implementation, you would be redirected to the checkout process.`);
-            });
-        });
+        // Final message
+        console.log('%c🌍 Harmony 网站已成功加载！\n感谢您支持人与自然和谐相处。', 'color:#10b981; font-size:13px');
     </script>
 </body>
 </html>
